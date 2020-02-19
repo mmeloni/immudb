@@ -32,7 +32,6 @@ func main() {
 	}
 
 	immugwCmd.Flags().StringP("port", "p", "8081", "immugw port number")
-	immugwCmd.Flags().StringP("host", "s", "127.0.0.1", "immugw host address")
 	immugwCmd.Flags().StringP("immudport", "j", "8080", "immudb port number")
 	immugwCmd.Flags().StringP("immudhost", "y", "127.0.0.1", "immudb host address")
 
@@ -44,10 +43,6 @@ func main() {
 
 func serve(cmd *cobra.Command, args []string) error {
 	port, err := cmd.Flags().GetString("port")
-	if err != nil {
-		return err
-	}
-	host, err := cmd.Flags().GetString("host")
 	if err != nil {
 		return err
 	}
@@ -124,6 +119,6 @@ func serve(cmd *cobra.Command, args []string) error {
 			logger.Infof(fmt.Sprintf("Immudb is listening at %s:%s", immudhost, immudport))
 		}
 	}
-	logger.Infof("Starting immugw at %s:%s", host, port)
-	return http.ListenAndServe(host+":"+port, handler)
+	logger.Infof("Starting immugw at port %s", port)
+	return http.ListenAndServe(":"+port, handler)
 }
