@@ -118,6 +118,11 @@ message HealthResponse {
 	bool status = 1;
 }
 
+message ReferenceOptions {
+	Key reference = 1;
+	Key key = 2;
+}
+
 service ImmuService {
 	rpc Set (KeyValue) returns (Index){
 		option (google.api.http) = {
@@ -195,6 +200,11 @@ service ImmuService {
 	rpc Health (google.protobuf.Empty) returns (HealthResponse){
 		option (google.api.http) = {
             get: "/v1/immurestproxy/healtresponse"
+        };
+	};
+	rpc Reference (ReferenceOptions) returns (Index){
+		option (google.api.http) = {
+            post: "/v1/immurestproxy/reference"
         };
 	};
 }
